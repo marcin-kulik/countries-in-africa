@@ -25,13 +25,13 @@ func DBInit() (*sql.DB, error) {
 
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		fmt.Println("UNABLE TO OPEN")
+		log.Println(err)
 		panic(err)
 	}
 
 	err = db.Ping()
 	if err != nil {
-		log.Println("Failed connection to DB")
+		log.Println(err)
 		panic(err)
 
 	}

@@ -1,7 +1,7 @@
 package config
 
 const (
-	Host     = "db"
+	Host     = "localhost"
 	Port     = 5432
 	User     = "postgres"
 	Password = "1234"

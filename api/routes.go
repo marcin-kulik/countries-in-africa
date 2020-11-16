@@ -1,6 +1,6 @@
 package api
 
 func (s *Server) setHandlers() {
-	s.Router.HandleFunc("/addCountry", s.addCountry).Methods("POST")
-	//s.Router.HandleFunc("/getCountries", s.getCountries).Methods("GET")
+	s.Router.HandleFunc("/addCountries", s.addCountries).Methods("POST")
+	s.Router.HandleFunc("/getCountries", s.getCountries).Methods("GET")
 }

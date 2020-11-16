@@ -4,11 +4,13 @@ import (
 	"countries-in-africa/model"
 	"countries-in-africa/repository"
 	"database/sql"
+	"fmt"
 	"log"
 )
 
 type CountryService interface {
-	AddCountry(country model.Country) error
+	AddCountries(countries []model.Country) error
+	GetCountries() (error, []model.Country)
 }
 
 type countryService struct {
@@ -21,15 +23,35 @@ func NewCountryService(db *sql.DB) *countryService {
 	}
 }
 
-func (s *countryService) AddCountry(country model.Country) error {
-	log.Println("Enter: service.addCountry")
-	defer log.Println("Exit:  service.addCountry")
+func (s *countryService) AddCountries(countries []model.Country) error {
+	log.Println("Enter: service.addCountries")
+	defer log.Println("Exit:  service.addCountries")
 
-	err, country := s.CountryRepository.AddCountry(country)
+	err, countries := s.CountryRepository.AddCountries(countries)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
 
 	return err
+}
+
+func (s *countryService) GetCountries() (error, []model.Country) {
+	log.Println("Enter: service.getCountries")
+	defer log.Println("Exit:  service.getCountries")
+
+	err, countries := s.CountryRepository.GetCountries()
+	if err != nil {
+		log.Println(err)
+		return err, []model.Country{}
+	}
+
+	var modelCountries []model.Country
+
+	for _, modelCountry := range countries {
+		fmt.Println(modelCountry)
+		modelCountries = append(modelCountries, model.EntityToModel(modelCountry))
+	}
+
+	return err, modelCountries
 }
